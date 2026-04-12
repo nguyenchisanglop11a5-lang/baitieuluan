@@ -1,0 +1,230 @@
+/* ===== RESET ===== */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f5f6fa;
+}
+
+/* ===== CONTAINER ===== */
+.app {
+  max-width: 420px;
+  margin: auto;
+  padding-bottom: 60px;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+}
+
+#balance {
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: #fff;
+  margin: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* ===== NAV ===== */
+.nav {
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== INPUT CHUNG ===== */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* ===== INPUT TIỀN ===== */
+.amount-box {
+  position: relative;
+}
+
+.amount-box input {
+  height: 42px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: right;
+  padding: 10px 35px 10px 10px;
+}
+
+.currency {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #888;
+}
+
+/* ===== QUICK BUTTON ===== */
+.quick-amount {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.quick-amount button {
+  flex: 1;
+  padding: 6px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: none;
+  background: #eef2ff;
+  color: #0072ff;
+  font-weight: 600;
+}
+
+/* ===== ACTION BUTTON ===== */
+.row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  color: white;
+}
+
+.income {
+  background: #2ecc71;
+}
+
+.expense {
+  background: #e74c3c;
+}
+
+/* ===== TRANSACTION ===== */
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+
+.transaction strong {
+  font-size: 14px;
+}
+
+.transaction small {
+  font-size: 12px;
+  color: #888;
+}
+
+.income-text {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.expense-text {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* ===== DELETE BUTTON ===== */
+.transaction button {
+  background: #eee;
+  color: red;
+  font-size: 11px;
+  margin-top: 4px;
+  padding: 3px 6px;
+}
+
+/* ===== CHART ===== */
+canvas {
+  margin-top: 12px;
+  max-height: 220px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 500px) {
+  .card {
+    margin: 8px;
+  }
+}
+button {
+  cursor: pointer;
+}
+
+.card button {
+  margin-top: 6px;
+}
+
+.card button:first-child {
+  background: #555;
+}
+
+.card button:last-child {
+  background: #ff9800;
+}
+/* INPUT GỌN HƠN */
+.amount-box input {
+  height: 38px;
+  font-size: 18px;
+  padding: 8px 35px 8px 10px;
+  text-align: right;
+}
+
+/* QUICK BUTTON */
+.quick-amount button {
+  padding: 8px;
+  font-size: 13px;
+}
+
+/* MÀU DỊU HƠN */
+.income {
+  background: #2ecc71;
+}
+
+.expense {
+  background: #ff5a5f;
+}
+
+/* RESET CARD */
+.reset-card {
+  border: 2px dashed #ddd;
+}
+
+.reset-card strong {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.reset-card button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.reset-card button:first-of-type {
+  background: #ffa726;
+}
+
+.reset-card button:last-of-type {
+  background: #ef5350;
+}
