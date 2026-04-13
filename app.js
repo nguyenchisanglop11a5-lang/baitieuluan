@@ -8,6 +8,7 @@ let transactions = [];
 let currentView = "home";
 let chart;
 
+// ================= CATEGORY =================
 const categories = {
   food: "🍜 Ăn uống",
   transport: "🚗 Di chuyển",
@@ -25,7 +26,19 @@ if(currentUser){
   document.getElementById("appSection").style.display="block";
 }
 
-// ================= PASSWORD (NEW) =================
+// ================= FORMAT =================
+function formatMoney(n){
+  return n.toLocaleString("vi-VN") + " ₫";
+}
+
+// YYYY-MM-DD -> DD/MM/YYYY
+function toVNDate(dateStr){
+  if(!dateStr) return "";
+  const [y, m, d] = dateStr.split("-");
+  return `${d}/${m}/${y}`;
+}
+
+// ================= PASSWORD =================
 function togglePassword(id){
   const input = document.getElementById(id);
   input.type = input.type === "password" ? "text" : "password";
@@ -82,11 +95,6 @@ function save(){
   localStorage.setItem("data_"+currentUser, JSON.stringify(transactions));
 }
 
-// ================= FORMAT =================
-function formatMoney(n){
-  return n.toLocaleString("vi-VN") + " ₫";
-}
-
 // ================= INPUT =================
 const amountInput = document.getElementById("amount");
 
@@ -98,16 +106,20 @@ function setQuickAmount(v){
   amountInput.value = v;
 }
 
-// ================= FILTER (UPGRADE) =================
+// ================= FILTER =================
 function getFiltered(){
-  const date = document.getElementById("filterDate")?.value;
+  const dateInput = document.getElementById("filterDate")?.value;
   const inc = document.getElementById("filterIncome")?.checked;
   const exp = document.getElementById("filterExpense")?.checked;
 
+  const filterDate = toVNDate(dateInput);
+
   return transactions.filter(t=>{
-    if(date && t.date !== date) return false;
+    if(filterDate && t.date !== filterDate) return false;
+
     if(inc && !exp && t.type !== "income") return false;
     if(!inc && exp && t.type !== "expense") return false;
+
     return true;
   });
 }
@@ -119,6 +131,11 @@ function addTransaction(type){
 
   const now = new Date();
 
+  const inputDate = document.getElementById("date")?.value;
+  const finalDate = inputDate
+    ? toVNDate(inputDate)
+    : toVNDate(now.toISOString().slice(0,10));
+
   transactions.unshift({
     id: Date.now(),
     amount,
@@ -126,7 +143,7 @@ function addTransaction(type){
     category: document.getElementById("category").value,
     type,
     time: now.toLocaleString("vi-VN"),
-    date: document.getElementById("date")?.value || now.toISOString().slice(0,10),
+    date: finalDate,
     month: now.getMonth()+1,
     year: now.getFullYear()
   });
@@ -161,9 +178,12 @@ function resetMonth(){
 // ================= NAV =================
 function showView(v){
   currentView = v;
-  ["home","budget","history"].forEach(x=>{
-    document.getElementById(x+"Section").style.display = x===v?"block":"none";
+
+  ["home","budget","history","profile"].forEach(x=>{
+    const el = document.getElementById(x+"Section");
+    if(el) el.style.display = x===v?"block":"none";
   });
+
   render();
 }
 
@@ -177,11 +197,13 @@ function render(){
     renderChart();
   }
   if(currentView==="history") renderHistory();
+  if(currentView==="profile") renderProfile();
 }
 
 // ================= BALANCE =================
 function renderBalance(){
   let total = 0;
+
   getFiltered().forEach(t=>{
     total += t.type==="income" ? t.amount : -t.amount;
   });
@@ -199,7 +221,7 @@ function renderTransactions(){
     <div class="transaction">
       <div>
         <strong>${t.note || "Khoản phí"}</strong><br>
-        <small>${categories[t.category]} • ${t.time}</small>
+        <small>${categories[t.category]} • ${t.date} • ${t.time}</small>
       </div>
       <div class="${t.type==="income"?"income-text":"expense-text"}">
         ${t.type==="income"?"+":"-"}${formatMoney(t.amount)}
@@ -218,7 +240,7 @@ function renderHistory(){
     <div class="transaction">
       <div>
         <strong>${t.note}</strong><br>
-        <small>${categories[t.category]} • ${t.time}</small>
+        <small>${categories[t.category]} • ${t.date} • ${t.time}</small>
       </div>
       <div class="${t.type==="income"?"income-text":"expense-text"}">
         ${formatMoney(t.amount)}
@@ -226,6 +248,14 @@ function renderHistory(){
       </div>
     </div>`;
   });
+}
+
+// ================= PROFILE =================
+function renderProfile(){
+  const el = document.getElementById("profileUser");
+  if(el){
+    el.innerText = currentUser || "";
+  }
 }
 
 // ================= BUDGET =================

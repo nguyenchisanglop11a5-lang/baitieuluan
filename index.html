@@ -13,12 +13,12 @@
 <!-- LOGIN -->
 <div id="authBox" class="card">
 
-  <h3>🔐 Đăng nhập</h3>
+  <h3 style="text-align:center;">🔐 Đăng nhập</h3>
 
   <div id="loginForm">
     <input id="loginUser" placeholder="Tài khoản">
 
-    <div style="display:flex;gap:5px;">
+    <div class="password-box">
       <input id="loginPass" type="password" placeholder="Mật khẩu">
       <button onclick="togglePassword('loginPass')">👁</button>
     </div>
@@ -30,13 +30,13 @@
   <div id="registerForm" style="display:none">
     <input id="regUser" placeholder="Tài khoản">
 
-    <div style="display:flex;gap:5px;">
-      <input id="regPass" type="password">
+    <div class="password-box">
+      <input id="regPass" type="password" placeholder="Mật khẩu">
       <button onclick="togglePassword('regPass')">👁</button>
     </div>
 
-    <div style="display:flex;gap:5px;">
-      <input id="regPass2" type="password">
+    <div class="password-box">
+      <input id="regPass2" type="password" placeholder="Nhập lại mật khẩu">
       <button onclick="togglePassword('regPass2')">👁</button>
     </div>
 
@@ -49,16 +49,21 @@
 <!-- APP -->
 <div id="appSection" style="display:none;">
 
-<header>
-  <h1>💰 QUẢN LÍ CHI TIÊU</h1>
-  <div id="balance">0 ₫</div>
-  <button onclick="logout()">Đăng xuất</button>
+<header class="header-app">
+  <div class="header-top">
+    <h1>💰 QUẢN LÍ CHI TIÊU</h1>
+  </div>
+
+  <div class="balance-card">
+    <p>Số dư</p>
+    <h1 id="balance">0 ₫</h1>
+  </div>
 </header>
 
 <!-- INPUT -->
 <div class="card">
   <div class="amount-box">
-    <input id="amount" type="text" placeholder="0">
+    <input id="amount" type="text" placeholder="Nhập số tiền">
     <span class="currency">₫</span>
   </div>
 
@@ -90,19 +95,22 @@
 
 <!-- FILTER -->
 <div class="card">
-  <strong>📅 Lọc</strong>
+  <strong>📅 Lọc giao dịch</strong>
   <input type="date" id="filterDate" onchange="render()">
 
-  <div style="margin-top:6px;">
+  <div class="filter">
     <label><input type="checkbox" id="filterIncome" checked onchange="render()"> Thu</label>
     <label><input type="checkbox" id="filterExpense" checked onchange="render()"> Chi</label>
   </div>
 </div>
 
 <!-- NAV -->
-<div class="card nav" onclick="showView('home')">🏠 Trang chính</div>
-<div class="card nav" onclick="showView('budget')">📊 Thống kê</div>
-<div class="card nav" onclick="showView('history')">📋 Giao dịch</div>
+<div class="bottom-nav">
+  <div onclick="showView('home')">🏠<br>Trang chủ</div>
+  <div onclick="showView('budget')">📊<br>Ngân sách</div>
+  <div onclick="showView('history')">📋<br>Lịch sử giao dịch</div>
+  <div onclick="showView('profile')">👤<br>Trang cá nhân</div>
+</div>
 
 <!-- HOME -->
 <div id="homeSection">
@@ -129,8 +137,21 @@
   </div>
 </div>
 
+<!-- PROFILE -->
+<div id="profileSection" style="display:none;">
+  <div class="card">
+    <strong>👤 Trang cá nhân</strong>
+
+    <p>👤 Tài khoản:</p>
+    <h3 id="profileUser"></h3>
+
+    <button onclick="logout()">🚪 Đăng xuất</button>
+  </div>
+</div>
+
 <!-- RESET -->
 <div class="card reset-card">
+  <strong>⚙️ Cài đặt</strong>
   <button onclick="resetMonth()">Reset tháng</button>
   <button onclick="resetApp()">Reset tất cả</button>
 </div>
