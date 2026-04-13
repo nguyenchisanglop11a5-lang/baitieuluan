@@ -1,4 +1,3 @@
-
 // ================= AUTH =================
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUser = localStorage.getItem("user") || null;
@@ -8,7 +7,6 @@ let transactions = [];
 let currentView = "home";
 let chart;
 
-// ================= CATEGORY =================
 const categories = {
   food: "🍜 Ăn uống",
   transport: "🚗 Di chuyển",
@@ -24,18 +22,6 @@ if(currentUser){
   loadData();
   document.getElementById("authBox").style.display="none";
   document.getElementById("appSection").style.display="block";
-}
-
-// ================= FORMAT =================
-function formatMoney(n){
-  return n.toLocaleString("vi-VN") + " ₫";
-}
-
-// YYYY-MM-DD -> DD/MM/YYYY
-function toVNDate(dateStr){
-  if(!dateStr) return "";
-  const [y, m, d] = dateStr.split("-");
-  return `${d}/${m}/${y}`;
 }
 
 // ================= PASSWORD =================
@@ -95,6 +81,11 @@ function save(){
   localStorage.setItem("data_"+currentUser, JSON.stringify(transactions));
 }
 
+// ================= FORMAT =================
+function formatMoney(n){
+  return n.toLocaleString("vi-VN") + " ₫";
+}
+
 // ================= INPUT =================
 const amountInput = document.getElementById("amount");
 
@@ -108,18 +99,14 @@ function setQuickAmount(v){
 
 // ================= FILTER =================
 function getFiltered(){
-  const dateInput = document.getElementById("filterDate")?.value;
+  const date = document.getElementById("filterDate")?.value;
   const inc = document.getElementById("filterIncome")?.checked;
   const exp = document.getElementById("filterExpense")?.checked;
 
-  const filterDate = toVNDate(dateInput);
-
   return transactions.filter(t=>{
-    if(filterDate && t.date !== filterDate) return false;
-
+    if(date && t.date !== date) return false;
     if(inc && !exp && t.type !== "income") return false;
     if(!inc && exp && t.type !== "expense") return false;
-
     return true;
   });
 }
@@ -131,11 +118,6 @@ function addTransaction(type){
 
   const now = new Date();
 
-  const inputDate = document.getElementById("date")?.value;
-  const finalDate = inputDate
-    ? toVNDate(inputDate)
-    : toVNDate(now.toISOString().slice(0,10));
-
   transactions.unshift({
     id: Date.now(),
     amount,
@@ -143,7 +125,7 @@ function addTransaction(type){
     category: document.getElementById("category").value,
     type,
     time: now.toLocaleString("vi-VN"),
-    date: finalDate,
+    date: document.getElementById("date")?.value || now.toISOString().slice(0,10),
     month: now.getMonth()+1,
     year: now.getFullYear()
   });
@@ -203,7 +185,6 @@ function render(){
 // ================= BALANCE =================
 function renderBalance(){
   let total = 0;
-
   getFiltered().forEach(t=>{
     total += t.type==="income" ? t.amount : -t.amount;
   });
@@ -221,7 +202,7 @@ function renderTransactions(){
     <div class="transaction">
       <div>
         <strong>${t.note || "Khoản phí"}</strong><br>
-        <small>${categories[t.category]} • ${t.date} • ${t.time}</small>
+        <small>${categories[t.category]} • ${t.time}</small>
       </div>
       <div class="${t.type==="income"?"income-text":"expense-text"}">
         ${t.type==="income"?"+":"-"}${formatMoney(t.amount)}
@@ -240,7 +221,7 @@ function renderHistory(){
     <div class="transaction">
       <div>
         <strong>${t.note}</strong><br>
-        <small>${categories[t.category]} • ${t.date} • ${t.time}</small>
+        <small>${categories[t.category]} • ${t.time}</small>
       </div>
       <div class="${t.type==="income"?"income-text":"expense-text"}">
         ${formatMoney(t.amount)}
@@ -248,14 +229,6 @@ function renderHistory(){
       </div>
     </div>`;
   });
-}
-
-// ================= PROFILE =================
-function renderProfile(){
-  const el = document.getElementById("profileUser");
-  if(el){
-    el.innerText = currentUser || "";
-  }
 }
 
 // ================= BUDGET =================
@@ -299,6 +272,20 @@ function deleteTx(i){
   transactions.splice(i,1);
   save();
   render();
+}
+
+// ================= PROFILE =================
+function renderProfile(){
+  const box = document.getElementById("profileBox");
+
+  if(!currentUser) return;
+
+  box.innerHTML = `
+    <h3>👤 Trang cá nhân</h3>
+    <p><strong>Tài khoản:</strong> ${currentUser}</p>
+    <p><strong>Email:</strong> ${currentUser}@gmail.com</p>
+    <button onclick="logout()" class="logout-btn">🚪 Đăng xuất</button>
+  `;
 }
 
 // ================= START =================

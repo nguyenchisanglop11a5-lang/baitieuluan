@@ -1,4 +1,3 @@
-
 /* ===== RESET ===== */
 * {
   box-sizing: border-box;
@@ -7,47 +6,32 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #f1f5f9;
+  background: #f5f7fb;
 }
 
 /* ===== APP ===== */
 .app {
   max-width: 420px;
   margin: auto;
-  padding-bottom: 70px;
+  padding-bottom: 20px;
 }
 
-/* ===== HEADER APP ===== */
-.header-app {
-  background: linear-gradient(135deg, #4facfe, #00c6ff);
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
   color: white;
-  padding: 15px;
-  border-radius: 0 0 18px 18px;
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* ===== BALANCE CARD ===== */
-.balance-card {
-  background: white;
-  color: #333;
-  margin-top: 12px;
-  padding: 15px;
-  border-radius: 16px;
   text-align: center;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+  padding: 16px;
+  border-radius: 0 0 14px 14px;
 }
 
-.balance-card h1 {
-  margin: 5px 0;
-  font-size: 26px;
+#balance {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 5px;
 }
 
-/* ===== CARD ===== */
+/* ===== CARD (CHẠY DỌC) ===== */
 .card {
   display: flex;
   flex-direction: column;
@@ -56,8 +40,8 @@ body {
   background: #fff;
   margin: 10px;
   padding: 12px;
-  border-radius: 14px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
 
 /* ===== INPUT TIỀN ===== */
@@ -67,14 +51,13 @@ body {
 
 .amount-box input {
   width: 100%;
-  height: 44px;
+  height: 42px;
   font-size: 20px;
   text-align: right;
   padding: 8px 36px 8px 10px;
-  border-radius: 12px;
-  border: 2px solid #4facfe;
+  border-radius: 10px;
+  border: 2px solid #0072ff;
   font-weight: bold;
-  background: #f9fbff;
 }
 
 .amount-box input:focus {
@@ -82,7 +65,6 @@ body {
   border-color: #00c6ff;
 }
 
-/* ===== ₫ ===== */
 .currency {
   position: absolute;
   right: 10px;
@@ -92,14 +74,13 @@ body {
   color: #666;
 }
 
-/* ===== INPUT ===== */
+/* ===== INPUT CHUNG ===== */
 input, select {
   width: 100%;
-  padding: 9px;
+  padding: 8px;
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 14px;
-  background: #f9fbff;
 }
 
 /* ===== QUICK BUTTON ===== */
@@ -113,7 +94,7 @@ input, select {
   padding: 6px;
   font-size: 12px;
   border-radius: 8px;
-  background: #eef4ff;
+  background: #eef3ff;
   color: #0072ff;
 }
 
@@ -125,7 +106,7 @@ button {
   color: white;
   cursor: pointer;
   font-size: 14px;
-  transition: 0.2s;
+  transition: 0.15s;
 }
 
 button:active {
@@ -147,31 +128,34 @@ button:active {
 }
 
 /* ===== FILTER ===== */
-.filter {
+.filter,
+.card .filter {
   display: flex;
+  flex-direction: row;
   gap: 15px;
 }
 
-/* ===== NAV BOTTOM ===== */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  max-width: 420px;
-  background: white;
+/* ===== NAV ===== */
+.nav-group {
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
-  border-top: 1px solid #eee;
+  margin: 10px;
 }
 
-.bottom-nav div {
+.nav {
+  flex: 1;
   text-align: center;
-  padding: 8px;
-  font-size: 12px;
+  background: white;
+  margin: 0 4px;
+  padding: 10px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.bottom-nav div:hover {
+.nav:hover {
+  background: #eef3ff;
   color: #0072ff;
 }
 
@@ -179,10 +163,9 @@ button:active {
 .transaction {
   display: flex;
   justify-content: space-between;
-  background: #f9fbff;
-  padding: 10px;
-  border-radius: 10px;
   margin-top: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #eee;
 }
 
 .transaction strong {
@@ -202,16 +185,6 @@ button:active {
 .expense-text {
   color: #e74c3c;
   font-weight: bold;
-}
-
-/* ===== PROFILE ===== */
-#profileSection .card {
-  text-align: center;
-}
-
-#profileSection button {
-  margin-top: 10px;
-  background: #ff5a5f;
 }
 
 /* ===== RESET CARD ===== */
@@ -237,6 +210,10 @@ button:active {
   margin-top: 40px;
 }
 
+#authBox h3 {
+  text-align: center;
+}
+
 #authBox input {
   margin-top: 6px;
 }
@@ -247,18 +224,14 @@ button:active {
   margin-top: 6px;
 }
 
-/* ===== PASSWORD ===== */
-.password-box {
-  display: flex;
-  gap: 5px;
+#authBox a {
+  color: #0072ff;
+  cursor: pointer;
 }
 
-.password-box input {
-  flex: 1;
-}
-
-.password-box button {
+#authBox div button {
   width: 40px;
+  padding: 0;
   background: #ddd;
   color: #333;
 }
@@ -266,6 +239,32 @@ button:active {
 /* ===== CHART ===== */
 canvas {
   margin-top: 10px;
+}
+
+/* ===== PROFILE (NEW) ===== */
+.profile-card {
+  text-align: center;
+}
+
+.profile-card h3 {
+  margin-bottom: 8px;
+  color: #0072ff;
+}
+
+.profile-card p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #444;
+}
+
+.logout-btn {
+  background: #ef5350;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.logout-btn:hover {
+  opacity: 0.9;
 }
 
 /* ===== MOBILE ===== */
